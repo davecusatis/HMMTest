@@ -4,7 +4,7 @@ Created on Nov 12, 2012
 @author: GuyZ
 '''
 
-from _ContinuousHMM import _ContinuousHMM
+from hmm.continuous import _ContinuousHMM
 import numpy
 
 class GMHMM(_ContinuousHMM):

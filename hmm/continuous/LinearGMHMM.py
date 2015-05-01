@@ -4,13 +4,13 @@ Created on Nov 14, 2012
 @author: GuyZ
 '''
 
-from GMHMM import GMHMM
-from hmm.weights.EWMA import EWMA
+from hmm.continuous import GMHMM
+from hmm.weights.Linear import Linear
 import numpy
 
-class EMAGMHMM(GMHMM,EWMA):
+class LinearGMHMM(GMHMM,Linear):
     '''
-    An Exponentially Weighted Moving Averages Gaussian Mixtures HMM - 
+    A Linearly Weighted Gaussian Mixtures HMM - 
     This is a representation of a continuous HMM, containing a mixture of gaussians in 
     each hidden state, and includes an internal weighing function that gives more
     significance to newer observations.
@@ -28,5 +28,5 @@ class EMAGMHMM(GMHMM,EWMA):
         print
         
         GMHMM.__init__(self,n,m,d,A,means,covars,w,pi,min_std,init_type,precision,verbose) #@UndefinedVariable
-        EWMA.__init__(self)
+        Linear.__init__(self)
         
