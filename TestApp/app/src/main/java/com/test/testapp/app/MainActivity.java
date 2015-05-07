@@ -4,14 +4,44 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.fitbit.api.*;
+import com.fitbit.api.client.*;
+
+import java.io.IOException;
+import java.util.Properties;
+
 
 public class MainActivity extends Activity {
+
+    public static final String OAUTH_TOKEN = "oauth_token";
+    public static final String OAUTH_VERIFIER = "oauth_verifier";
+
+    private FitbitAPIEntityCache entityCache = new FitbitApiEntityCacheMapImpl();
+    private FitbitApiCredentialsCache credentialsCache = new FitbitApiCredentialsCacheMapImpl();
+    private FitbitApiSubscriptionStorage subscriptionStore = new FitbitApiSubscriptionStorageInMemoryImpl();
+
+    private String apiBaseUrl;
+    private String fitbitSiteBaseUrl;
+    private String exampleBaseUrl;
+    private String clientConsumerKey;
+    private String clientSecret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            Properties properties = new Properties();
+            properties.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+            apiBaseUrl = properties.getProperty("apiBaseUrl");
+            fitbitSiteBaseUrl = properties.getProperty("fitbitSiteBaseUrl");
+            exampleBaseUrl = properties.getProperty("exampleBaseUrl").replace("/app", "");
+            clientConsumerKey = properties.getProperty("clientConsumerKey");
+            clientSecret = properties.getProperty("clientSecret");
+        } catch (IOException e) {
+            throw new ServletException("Exception during loading properties", e);
+        }
+
     }
 
 
